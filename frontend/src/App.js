@@ -10,15 +10,6 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 function App() {
   return (
    <Router>
-    <div>
-      <nav>
-        <a href="/">Home Page</a> |
-        <a href="/taskcreation">Task Creation Page</a> |
-        <a href="/analytics">Analytics Page</a> |
-        <a href="/signup">Sign Up Page</a> |
-        <a href="/Signin">Sign In Page</a>
-      </nav>
-    </div>
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/taskcreation" element={<TaskCreation/>}/>
@@ -29,5 +20,4 @@ function App() {
    </Router>
   );
 }
-
 export default App;
