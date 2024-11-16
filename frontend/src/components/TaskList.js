@@ -11,7 +11,7 @@ const TaskList = () => {
                 const res = await DisTasks();
                 listtasks(res.data);
             } catch (error) {
-                console.error("Tasks went boom, sorry", error);
+                console.error("Display went boom, sorry", error);
             }
         };
         displaytasks();
