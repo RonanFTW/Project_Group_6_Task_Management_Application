@@ -6,7 +6,7 @@ const TaskDisplay = ({task, edit}) => {
         try {
             await DelTask(task.id);
         } catch (err) {
-            console.log("Delete function went boom", err)
+            console.log("Delete function went boom, sorry", err)
         }
     };
 
