@@ -1,0 +1,181 @@
+/* Banner Styling */
+.banner {
+  background-color: #0077c2; 
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.banner h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* Button links for banner */
+.banner .nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.banner .nav-links a {
+  text-decoration: none;
+  color: white;
+  background-color: #0056b3; 
+  padding: 10px 20px;
+  border-radius: 25px; 
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.banner .nav-links a:hover {
+  background-color: #004494; 
+  transform: scale(1.05);
+}
+
+.banner .nav-links a:active {
+  transform: scale(0.95);
+}
+
+/* General Styling */
+body {
+  background-color: #e3f2fd; 
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main page */
+.main {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto; 
+}
+
+/* Center Titles */
+h2, h3 {
+  text-align: center;
+  color: #0077c2; 
+  font-weight: 600;
+}
+
+/* Task Styling */
+.task {
+  background: #ffffff; 
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.task:hover {
+  transform: translateY(-5px); 
+}
+
+/* Button Styling */
+button {
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 25px; 
+  margin: 10px 5px;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+button:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05); 
+}
+
+button:active {
+  transform: scale(0.98); 
+}
+
+/* Form Items Styling */
+input[type="text"], input[type="password"], textarea, select, input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 20px;
+  border: 1px solid #b0bec5; 
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; 
+}
+
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+
+form {
+  max-width: 600px;
+  margin: 0 auto; 
+}
+
+
+.no-tasks {
+  background-color: #f8f9fa; 
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #6c757d; 
+  font-style: italic;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.create-task-btn-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #0077c2; 
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer p {
+  margin: 0;
+  line-height: 1.6; 
+}
+
+.footer a { 
+  color: #b3e5fc; 
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
