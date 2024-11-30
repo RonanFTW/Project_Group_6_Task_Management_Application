@@ -1,10 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { signUp, login, getAllUsers } = require('../controllers/users');
+const pool = require("../config/db");
 
-// Routes
-router.post('/signup', signUp);
-router.post('/login', login);  
-router.get('/', getAllUsers);   
+// GET /api/users - Retrieve all users
+router.get("/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM users");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
+});
 
 module.exports = router;
