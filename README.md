@@ -42,3 +42,7 @@ Resolved Issues
     Backend-Frontend Sync:
         Ensured consistent naming for properties like due_date in both the backend and frontend.
         Addressed mismatched column counts in SQL INSERT statements.
+
+Backend Development: 12/2/2024
+        Added hashing to user sign up and sign in process in order make sure passwords are encrypted and secure.
+    
