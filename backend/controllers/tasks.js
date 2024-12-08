@@ -13,16 +13,16 @@ exports.getTasks = async (req, res) => {
 // Create a Task
 exports.createTask = async (req, res) => {
     try {
-        const { title, description, priority, due_date } = req.body;
+        const { title, description, priority, due_date, assigned_to } = req.body;
 
         if (!title || !description || !priority || !due_date) {
-            return res.status(400).json({ error: 'All fields are required.' });
+            return res.status(400).json({ error: 'All fields aside from assignment are required.' });
         }
 
-        const task = await Task.create({ title, description, priority, due_date });
+        const task = await Task.create({ title, description, priority, due_date, assigned_to: assigned_to || null});
         res.status(201).json(task);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create task.' });
+        console.error('Error in CreateTask:', error);
     }
 };
 
@@ -30,13 +30,13 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, priority, due_date } = req.body;
+        const { title, description, priority, due_date, assigned_to } = req.body;
 
-        if (!title || !description || !priority || !due_date) {
-            return res.status(400).json({ error: 'All fields are required.' });
+        if (!title || !description || !priority || !due_date || !assigned_to) {
+            return res.status(400).json({ error: 'All fields aside from assignment are required.' });
         }
 
-        const updatedTask = await Task.update(id, { title, description, priority, due_date });
+        const updatedTask = await Task.update(id, { title, description, priority, due_date, assigned_to: assigned_to || null });
         if (!updatedTask) {
             return res.status(404).json({ error: 'Task not found.' });
         }
