@@ -14,6 +14,7 @@ const TaskDisplay = ({task, edit}) => {
         <div className='task'>
             <p><b>{task.title}</b></p>
             <p>{task.desc}</p>
+            <p><b>Assigned to:</b> {task.as_to || 'Unassigned'}</p>
             <p>Priority Status: {task.prio}</p>
             <p>Due: {task.due}</p>
             <button onClick={DEL}>Delete</button>
