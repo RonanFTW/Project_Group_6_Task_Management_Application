@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ApiConnection from "../api/Api"; // Axios instance for API calls
+import ApiConnection, { GetUsers } from "../api/Api"; // Axios instance for API calls
 
 const TaskHandling = ({ task, close, refresh }) => {
   // Initialize form state based on whether task is for creation or editing
@@ -9,10 +9,24 @@ const TaskHandling = ({ task, close, refresh }) => {
     status: task ? task.status : "open",
     priority: task ? task.priority : "Medium",
     dueDate: task ? task.dueDate : "",
+    assigned_to: task ? task.assigned_to : "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const uList = await GetUsers();
+                setUsers(uList);
+            } catch (err) {
+                console.error('Where are they?', err);
+            }
+        };
+        fetchUsers();
+    }, []);
+  
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -89,6 +103,19 @@ const TaskHandling = ({ task, close, refresh }) => {
             value={formData.dueDate}
             onChange={handleChange}
           />
+        </div>
+        <div>
+          <label>Assign Task To:</label>
+            <select name="assigned_to" 
+                value={formData.assigned_to} 
+                onChange={handleChange}
+                required
+            >
+                <option value="">All Users</option>
+                {users.map(user => (
+                    <option key={user.id} value={user.id}>{user.username}</option>
+                ))}
+            </select>
         </div>
         <button type="submit">{task ? "Update Task" : "Create Task"}</button>
       </form>
