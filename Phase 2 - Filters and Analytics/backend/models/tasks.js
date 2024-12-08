@@ -42,13 +42,20 @@ const Task = {
         const anoverdue = `SELECT COUNT(*) FROM tasks WHERE due_date < NOW()`;
         const anopen = `SELECT COUNT(*) FROM tasks WHERE due_date >= NOW()`;
         const anusers = `SELECT COUNT(*) FROM users`;
-        const [totaltasks, priority, goldengoose, overdue, open, users] = await Promise.all([ 
+        const ananchors = `SELECT users.id, users.username, COUNT(tasks.id) AS overdue_count FROM users
+        LEFT JOIN tasks ON tasks.assigned_to = users.id WHERE tasks.due_date < NOW()
+        GROUP BY users.id, users.username ORDER BY overdue_count DESC`;
+        const aninactive = `SELECT id, username FROM users WHERE id NOT IN (
+            SELECT assigned_to FROM tasks WHERE assigned_to IS NOT NULL)`;
+        const [totaltasks, priority, goldengoose, overdue, open, users, anchors, inactive] = await Promise.all([ 
             pool.query(antotaltasks), 
             pool.query(anpriority), 
             pool.query(angoldengoose), 
             pool.query(anoverdue),
             pool.query(anopen),
             pool.query(anusers),
+            pool.query(ananchors),
+            pool.query(aninactive),
         ]);
 
         ananalytics.TTtasks = parseInt(totaltasks.rows[0].count, 10);
@@ -60,6 +67,8 @@ const Task = {
         ananalytics.ODtasks =parseInt(overdue.rows[0].count, 10);
         ananalytics.taskrat = ((open.rows[0].count) / (totaltasks.rows[0].count)).toFixed(2);
         ananalytics.usercount = parseInt(users.rows[0].count, 10);
+        ananalytics.anchors = anchors.rows;
+        ananalytics.inactive = inactive.rows;
         return ananalytics;
     },
 };
