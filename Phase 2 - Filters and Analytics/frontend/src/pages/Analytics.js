@@ -5,7 +5,7 @@ import { TaskAn } from '../api/Api';
 
 const Analytics = () => {
     const [data, setData] = useState({ TTtasks: 0, comptasks: 0, ODtasks: 0, anpriority: {}, 
-        taskrat: 0, TopTM: null, usercount: 0 });
+        taskrat: 0, TopTM: null, usercount: 0, anchors: [], inactive: 0 });
 
     useEffect(() => {
         const fetchAnalytics = async () => {
@@ -26,17 +26,18 @@ const Analytics = () => {
             <div className="main">
                 <h1>Team Analytics and Performance</h1>
                 <div className="tasksum">
+                    <h3><b>Current Task Data</b></h3>
                     <div className="TTD">
-                    <p>Total Tasks: {data.TTtasks}</p>
+                    <p><b>Total Tasks:</b> {data.TTtasks}</p>
                     </div>
                     <div className="TOD">
-                    <p>Total Overdue Tasks: {data.ODtasks}</p>
+                    <p><b>Total Overdue Tasks:</b> {data.ODtasks}</p>
                     </div>
                     <div className="TCD">
-                    <p>Completed to Overdue Ratio: {data.taskrat}</p>
+                    <p><b>Completed to Overdue Ratio:</b> {data.taskrat}</p>
                     </div>
                     <div className='TPD'>
-                    <p>Amount by priority status:</p>
+                    <p><b>Amount by priority status:</b></p>
                     <ul>
                         {Object.entries(data.anpriority).map(([priority, count]) => (
                             <li key={priority}>{priority}: {count}</li>
@@ -45,8 +46,12 @@ const Analytics = () => {
                     </div>
                 </div>
                 <div className="TTM">
-                    <p><b>Team member performance</b></p>
+                    <h3><b>Team Member Performance</b></h3>
+                    <div className="TPD">
                     <p><b>Team strength:</b> {data.usercount}</p>
+                    </div>
+                    <div className="TPD">
+                        <p><b>Team members by amount of assigned tasks:</b></p>
                     {data.TopTM && data.TopTM.length > 0 ? (
                         <ul>
                             {data.TopTM.map((user) => (
@@ -58,6 +63,35 @@ const Analytics = () => {
                     ) : (
                         <p>This is a very lonely team</p>
                     )}
+                    </div>
+                    <div className="TPD">
+                        <p><b>Team by amount of overdue tasks:</b></p>
+                        {data.anchors.length > 0 ? (
+                            <ul>
+                                {data.anchors.map((user) => (
+                                    <li key={user.id}>
+                                        {user.username}: {user.overdue_count}
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No overdue tasks?? Is it truly possible??</p>
+                        )}
+                    </div>
+                    <div className="TPD">
+                        <p><b>Users with no tasks:</b></p>
+                        {data.inactive && data.inactive.length > 0 ? (
+                        <ul>
+                            {data.inactive.map((user) => (
+                                <li key={user.id}>
+                                    {user.username}
+                                </li>
+                            ))}
+                        </ul>
+                        ) : (
+                            <p>Can you believe it?? A 100% active team??</p>
+                        )}
+                    </div>
                 </div>
             </div>
             <Footer />
