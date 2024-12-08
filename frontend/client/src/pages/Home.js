@@ -2,80 +2,87 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import TaskList from "../components/TaskList";
+import {GetUsers} from '../api/Api';
 
 const Home = () => {
-  const [filters, setFilters] = useState({
-    status: "",
-    priority: "",
-    dueDate: "",
-  });
+    const [filter, applyfilter] = useState({
+        status: '',
+        priority: '',
+        due_date: '',
+        assigned_to: '',
+    });
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
-  };
+  const filtration = (event) => {
+        const {name, value} = event.target;
+        applyfilter({...filter, [name]: value});
+    }
 
-  const applyFilters = (e) => {
-    e.preventDefault();
-    console.log("Filters applied:", filters); // For debugging
-  };
+  const [users, setusers] = useState([]);
+    useEffect(()=> {
+        const userdata = async () => {
+            try {
+                const users = await GetUsers();
+                setusers(users);
+            } catch (err) {
+                console.error("Unable to get the users", err);
+            }
+        };
+        userdata();
+    }, []);
 
-  return (
-    <div className="content">
-      <Header />
-      <div className="main">
-        <TaskList filters={filters} />
-        <div className="filter">
-          <form onSubmit={applyFilters}>
-            <label>
-              <p>Sort by task status:</p>
-              <select
-                name="status"
-                value={filters.status}
-                onChange={handleFilterChange}
-              >
-                <option value="">Sort by all</option>
-                <option value="open">Open</option>
-                <option value="inprog">In Progress</option>
-                <option value="comp">Completed</option>
-                <option value="miss">Overdue</option>
-              </select>
-            </label>
+return (
+        <div className='content'>
+            <Header />
+            <div className='main'>
+                <TaskList filter={filter}/>
 
-            <label>
-              <p>Sort by Priority level:</p>
-              <select
-                name="priority"
-                value={filters.priority}
-                onChange={handleFilterChange}
-              >
-                <option value="">Sort by all</option>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </label>
+      
+                <div className='filter'>
+                    <form>
+                        <label>
+                            <p>Sort by Task Status:</p>
+                            <select name="status" value={filter.status} 
+                            onChange={filtration}>
+                                <option value="">Sort by all</option>
+                                <option value="open">Sort by open tasks</option>
+                                <option value="miss">Sort by overdue tasks</option>
+                            </select>
+                        </label>
 
-            <label>
-              <p>Sort by Due Date:</p>
-              <input
-                type="date"
-                name="dueDate"
-                value={filters.dueDate}
-                onChange={handleFilterChange}
-              />
-            </label>
+                        <label>
+                            <p>Sort by Priority Level:</p>
+                            <select name="priority" value={filter.priority} 
+                            onChange={filtration}>
+                                <option value="">Sort by all</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </label>
 
-            <button type="submit">Apply Filters</button>
-          </form>
+                        <label>
+                            <p>Sort by Due Date:</p>
+                            <input type="date" name="due_date" value={filter.due_date} 
+                            onChange={filtration}/>
+                        </label>
+
+                        <label>
+                            <p>Sort by individual assignment</p>
+                            <select name="assigned_to" value={filter.assigned_to}
+                            onChange={filtration}>
+                                <option value="">Sort by All</option>
+                                {users.map((user) => (
+                                    <option key={user.id} value={user.id}>
+                                        {user.username}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                    </form>
+                </div>
+            </div>
+            <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
-  );
+    );
 };
-
 export default Home;
